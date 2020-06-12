@@ -89,5 +89,4 @@ route::prefix('admin')->group(function(){
 	route::prefix('ticket')->group(function(){
 		route::get('/','Admin\TicketController@index')->name('admin.ticket');
 	});
-	ok
 });
