@@ -60,12 +60,24 @@ route::prefix('admin')->group(function(){
 	});
 	////////////////////// SEAT //////////////////////
 	route::prefix('seat')->group(function(){
+
 		route::get('/','Admin\SeatController@index')->name('admin.seat');
+		//giao dien ghe khi thay doi room
+		route::post('/findroom','Admin\SeatController@findRoom')->name('admin.seat.findroom');
+		
 		route::post('/','Admin\SeatController@postIndex')->name('admin.seat');
+
+		route::get('/list','Admin\SeatController@list')->name('admin.seat.list');
+		
 		route::post('/add','Admin\SeatController@add')->name('admin.seat.add');
 
 		//select seat trong
 		route::post('/select','Admin\SeatController@select')->name('admin.seat.select');
+
+		//load seat from show time
+		route::post('/showtime','Admin\SeatController@loadSeat')->name('admin.seat.showtime');		
+		//load showtime when change film
+		route::post('/showtime/film','Admin\SeatController@loadShowtime')->name('admin.seat.film');		
 	});
 
 	////////////////////// ShowTime //////////////////////
@@ -83,10 +95,49 @@ route::prefix('admin')->group(function(){
 		//delete
 		route::post('/delete/','Admin\ShowtimeController@delete')->name('admin.film.delete');
 		// find showtime of room	
-		route::post('/find/','Admin\ShowtimeController@findOfRoom')->name('admin.film.find');	
+		route::post('/find/','Admin\ShowtimeController@findOfFilm')->name('admin.film.find');	
+		// load show time (thay doi khi thay doi select film)
+		route::post('/loadfilm/','Admin\ShowtimeController@loadFilm')->name('admin.film.loadfilm');	
 	});
 	////////////////////// TICKET //////////////////////
 	route::prefix('ticket')->group(function(){
 		route::get('/','Admin\TicketController@index')->name('admin.ticket');
+
+		// ajax load ticket form film
+		route::post('/find','Admin\TicketController@find')->name('admin.ticket.find');
+		
+	});
+	////////////////////// Account //////////////////////
+	route::prefix('account')->group(function(){
+		route::get('/','Admin\AccountController@index')->name('admin.account');
+		route::post('/find','Admin\AccountController@find')->name('admin.account.find');
+		
 	});
 });
+
+///////////////////// User /////////////////////
+route::prefix('user')->group(function(){
+	route::get('/','User\UserController@home')->name('user.home');
+	route::get('/detail/{id}','User\UserController@detail')->name('user.detail');
+
+	//find show time of day
+	route::post('/showtime/find','User\UserController@findShowtime')->name('user.showtime.find');	
+	//post danh gia
+	route::post('/rate/','User\UserController@rate')->name('user.rate');	
+
+	// thanh toan
+	route::get('/checkout/{id_user}/{id_film}/{id_showtime}','User\UserController@checkout')->name('user.checkout');
+
+	route::post('/checkout/{id_user}/{id_film}/{id_showtime}','User\UserController@postCheckout')->name('user.checkout.post');
+
+	///// frofile /////
+	route::get('/profile/{id}','User\UserController@profile')->name('user.profile');
+	route::post('/profile/edit','User\UserController@editProfile')->name('user.profile.edit');
+
+});
+
+route::get('/login','LoginController@login')->name('login');
+route::post('/login','LoginController@postLogin')->name('login.post');
+route::get('/register','LoginController@register')->name('register');
+route::post('/register','LoginController@postRegister')->name('register.post');
+route::get('/logout','LoginController@logout')->name('logout');

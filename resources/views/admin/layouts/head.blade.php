@@ -34,6 +34,7 @@
     <script type="text/javascript">
         var path = "{{asset('/')}}";
     </script>
+    <link rel="stylesheet" href="{{asset('src/user/style-seat.css')}}">
 
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">

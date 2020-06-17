@@ -1,0 +1,73 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="css.css">
+</head>
+
+<body>
+    <div class="poster">
+        
+        </div>
+ 
+</body>
+
+
+<script>
+    var order = 5
+    var slideIndex = 1;
+    showSlides(slideIndex);
+
+    // var f = setInterval(function () {
+    //   plusSlides(1)
+    // }, 6000);
+
+    // function pauseTimer() {
+    //   clearInterval(f)
+    // }
+
+    // function activateTimer() {
+    //   f = setInterval(function () {
+    //     plusSlides(1)
+    //   }, 6000);
+    // }
+
+
+    function plusSlides(n) {
+        var overflow = document.getElementsByClassName("overflow");
+        var slides = document.getElementsByClassName("mySlides");
+        if (slideIndex + n > slides.length) { 
+            overflow[0].style.transition="none";
+            overflow[0].style.marginLeft = "100%";
+            var action = setTimeout(function(){
+overflow[0].style.transition="all 0.5s";
+}, 3000);
+            
+
+        }
+        showSlides(slideIndex += n);
+    }
+
+    function currentSlide(n) {
+        showSlides(slideIndex = n);
+    }
+
+    function showSlides(n) {
+        var i;
+        var overflow = document.getElementsByClassName("overflow");
+        var slides = document.getElementsByClassName("mySlides");
+        var dots = document.getElementsByClassName("dot");
+        if (n > slides.length) { slideIndex = 1 }
+        if (n < 1) { slideIndex = slides.length }
+        //   for (i = 0; i < slides.length; i++) {
+        //     slides[i].style.display = "none";
+        //   }        
+
+        for (i = 0; i < dots.length; i++) {
+            dots[i].className = dots[i].className.replace(" active", "");
+        }
+        overflow[0].style.marginLeft = "-" + (slideIndex - 1) * 100 + "%";
+        dots[slideIndex - 1].className += " active";
+    }
+</script>
+
+</html>

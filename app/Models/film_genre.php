@@ -38,4 +38,7 @@ class film_genre extends BaseModel{
         
         return parent::base_update($this->request);
     }
+    public function genre(){
+        return $this->belongsTo('App\Models\genre', 'genre_id', 'id');
+    }
 }

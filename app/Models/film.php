@@ -26,6 +26,8 @@ class film extends BaseModel{
         'price',
         'poster',
         'status',
+        'banner',
+        'star',
         
         // 'id_genre',
         // 'id_country',

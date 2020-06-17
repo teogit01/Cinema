@@ -12,6 +12,8 @@ use App\Models\film;
 use App\Models\film_country;
 use App\Models\film_genre;
 
+use Illuminate\Support\Collection;
+
 class FilmController extends Controller
 {
     public function __construct(){
@@ -22,7 +24,7 @@ class FilmController extends Controller
     	return view('admin.film.index');
     }
     public function list(){
-        $films = film::paginate(5);
+        $films = film::paginate(4);
     	return view('admin.film.list',['films'=>$films]);
     }
     public function getAdd(){
@@ -34,14 +36,18 @@ class FilmController extends Controller
 
     // function post add
     public function postAdd(Request $request){
-
+        
         // Add film 
         if ($request->has('image')){
-            $path = public_path('img/poster');
+            $path = public_path('img/film');
             $name = Str::random(5).'_'.$request->image->getClientOriginalName();            
             $request->image->move($path,$name);
         }             
-        
+        if ($request->has('banner')){
+            $path = public_path('img/banner');
+            $banner = Str::random(5).'_'.$request->banner->getClientOriginalName();            
+            $request->banner->move($path,$banner);
+        }
         $film = new film();
         $film->code = str::random(5);
         $film->name = $request->name;
@@ -52,6 +58,7 @@ class FilmController extends Controller
         $film->openday = $request->openday;
         $film->price = $request->price;
         $film->poster = isset($name) ? $name : ''; 
+        $film->banner = isset($banner) ? $banner : ''; 
         $film->status = 0;
         $film->save();
         
@@ -79,8 +86,48 @@ class FilmController extends Controller
     }
     // Detail
     public function detail(Request $request){
+        
         $film = film::find($request->id);
-        return view('admin.film.detail',['film'=>$film]);
+        // array genre hien tai cua film
+        $genre_film = film_genre::where('film_id','=',$request->id)->get();
+
+        foreach ($genre_film as $item){
+            $genres[] = $item->genre->name;
+        }
+        //country
+        $country_film = film_country::where('film_id','=',$request->id)->get();
+        foreach ($country_film as $item){
+            $countrys[] = $item->country->name;
+        }
+
+        // array genre goc
+        $allGenre = genre::all();
+        foreach ($allGenre as $item){
+            $originGenre[] = $item->name;
+        }
+        $allCountry = country::all();
+        foreach ($allCountry as $item){
+            $originCountry[] = $item->name;
+        }
+        
+        $diffGenres = collect($originGenre)->diff($genres)->toArray();
+        //country
+        $diffCountrys = collect($originCountry)->diff($countrys)->toArray();
+         
+        foreach($diffGenres as $diff){
+            $diffGenre[] = $diff;
+        }
+        //country
+        foreach($diffCountrys as $diff){
+            $diffCountry[] = $diff;
+        }
+        
+        return view('admin.film.detail',
+            [   'film'=>$film,
+                'diffGenre'=>$diffGenre,
+                'genres'=>$genres,
+                'diffCountry'=>$diffCountry,
+                'countrys'=>$countrys ]);
     }
     // Edit
 
@@ -111,6 +158,16 @@ class FilmController extends Controller
 
     public function delete(Request $request){
         $film = film::find($request->id);
+
+        $genre = film_genre::where('film_id','=',$request->id)->get();
+        $country = film_country::where('film_id','=',$request->id)->get();
+
+        foreach($genre as $item){
+            $item->delete();
+        }        
+        foreach($country as $item){
+            $item->delete();
+        }
         $film->delete();
         return back()->with('success','Xoá Thành Công!');
     }

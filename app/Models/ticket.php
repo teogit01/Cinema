@@ -44,4 +44,16 @@ class ticket extends BaseModel{
         
         return parent::base_update($this->request);
     }
+    public function seat(){
+        return $this->belongsTo('App\Models\seat', 'id_seat', 'id');
+    }
+    public function user(){
+        return $this->belongsTo('App\Models\user', 'id_user', 'id');
+    }
+    public function film(){
+        return $this->belongsTo('App\Models\film', 'id_film', 'id');
+    }
+    public function showtime(){
+        return $this->belongsTo('App\Models\showtime', 'id_showtime', 'id');
+    }
 }

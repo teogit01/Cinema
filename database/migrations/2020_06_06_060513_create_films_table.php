@@ -25,6 +25,8 @@ class CreateFilmsTable extends Migration
             $table->integer('openday')->nullable();
             $table->text('poster')->nullable();
             $table->string('status')->nullable();
+            $table->string('banner')->nullable();
+            $table->float('star')->nullable();
 
             // $table->integer('id_country')->nullable();
             // $table->integer('id_genre')->nullable();

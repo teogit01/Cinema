@@ -45,6 +45,9 @@ class showtime extends BaseModel{
     }
 
     public function film(){
-        return $this->hasMany('App\Modles\film','id','id');
+        return $this->belongsTo('App\Models\film','id_film','id');
+    }
+    public function room(){
+        return $this->belongsTo('App\Models\room', 'id_room', 'id');
     }
 }

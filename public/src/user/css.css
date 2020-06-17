@@ -1,0 +1,139 @@
+* {
+    box-sizing: border-box;
+}
+
+html{
+    font-family: 'Quicksand';
+    width: 100%;
+    margin: 0 auto;
+    font-size: 62.5%;
+}
+
+body {
+    margin: 0 auto;
+    font-size: 1.6rem;
+}
+
+.poster{
+    margin: 80px 0 20px 500px;   
+    width: 200px;
+    height: 200px;
+    position: relative;
+    background: red;
+    box-shadow: 0px 6px 15px -5px #000;
+}
+
+.mySlides {  
+    width: 25%;
+    animation-name: fade;
+    animation-duration: 1.5s;
+    display: block;
+}
+
+#s1{
+    order: 2;
+}
+
+#s2{
+    order: 5;
+}
+
+#s3{
+    order: 3;
+}
+
+#s4{
+    order: 4;
+}
+
+.mySlides:hover .poster_trailer{
+    display: block;
+}
+
+.poster_trailer{
+    display: none;
+    position: absolute;
+    top: calc(50% - 40px);
+    left: calc(50% - 40px);
+}
+.poster_trailer:hover{
+    opacity: 0.7;
+    cursor: pointer;
+}
+
+.overflow{
+    width: 400%;    
+    display: flex;    
+    overflow: hidden;
+    transition: all 0.5s;
+}
+
+.slideshow-container {
+
+    width: 100%;
+}
+
+.prev, .next {
+  cursor: pointer;
+  position: absolute;
+  top: calc(50% - 39px);
+  width: auto;
+  padding: 16px;
+  color: rgba(255, 255, 255, 0.6);
+  font-weight: bold;
+  font-size: 35px;
+  user-select: none; 
+}
+
+.prev{
+    left: 0;
+}
+.next {
+  right: 0;
+}
+
+
+.dot {
+  cursor: pointer;
+  height: 12px;
+  width: 12px;
+  margin: 0 2px;
+  background-color: #bbb;
+  border-radius: 50%;
+  display: inline-block;
+  transition: background-color 0.6s ease;
+}
+
+.active{
+    background-color: #fb4226;
+} 
+
+
+.fade {
+  animation-name: fade;
+  animation-duration: 1s;
+}
+
+.poster_img{
+    cursor: pointer;
+    width: 100%;
+    height: auto;
+}
+
+.all_dot {
+    position: absolute;
+    bottom: 16.5%;
+    left: calc(50% - 28px);
+    text-align:center;
+
+}
+
+
+@keyframes fade {
+  from {
+      opacity: 0;
+    } 
+  to {
+      opacity: 1;
+    }
+}

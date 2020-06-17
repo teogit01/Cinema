@@ -38,4 +38,7 @@ class film_country extends BaseModel{
         
         return parent::base_update($this->request);
     }
+    public function country(){
+        return $this->belongsTo('App\Models\country', 'country_id', 'id');
+    }
 }

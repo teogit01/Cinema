@@ -96,7 +96,7 @@
                                                 	</div>
                                                 	<select data-style="btn-outline"title="Quốc gia"  name="country[]" class="form-control col-sm-6 selectpicker"multiple data-selected-text-format="">
                                                 		@foreach($countrys as $country)
-                                                            <option value="{{$genre->id}}">{{$country->name}}</option>
+                                                            <option value="{{$country->id}}">{{$country->name}}</option>
                                                         @endforeach
                                                 	</select>
                                                 </div>	
@@ -107,6 +107,14 @@
                                                 	</div>                                                	
                                                 	<input type="file" name="image" multiple class="form-control col-sm-10" >
                                                 </div>	
+
+                                                <br>
+                                                <div class="col-sm-12 row">
+                                                    <div class="col-sm-2" >
+                                                        <label>poster</label><span class="force">*</span>
+                                                    </div>                                                  
+                                                    <input type="file" name="banner" multiple class="form-control col-sm-10" >
+                                                </div>  
 
                                                 <br>
                                                 <div class="col-sm-12 row">

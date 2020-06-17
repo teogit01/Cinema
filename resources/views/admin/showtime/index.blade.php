@@ -98,10 +98,10 @@
 					</li>
 					@endfor
 					<div style="width: 25%;text-align: right;margin-left: 60px;">
-						<select name="" class="form-control findRoom">
-							<option>Tìm Theo Phòng</option>
-							@foreach($rooms as $room)
-								<option value="{{$room->id}}">{{$room->name}}</option>
+						<select name="" class="form-control findFilm">
+							<!-- <option>Tìm Theo Phòng</option> -->
+							@foreach($films as $film)
+								<option value="{{$film->id}}">{{$film->name}}</option>
 							@endforeach
 						</select>
 					</div>
@@ -248,13 +248,14 @@
 		// show all showtime of date
 		function showtime(date){
 			$('#today').val(date)
+			const id_film = $('.findFilm').val()			
 			$.ajax({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     type: 'post',
                     url: path +'admin/showtime/ofday',
-                    data : {date:date},
+                    data : {date:date,id_film:id_film},
                     success : function(data) {
                     	//console.log(data)
                     	//alert(data)
@@ -273,6 +274,7 @@
 		// Today change
 		$('#today').on('change',function(){
 			const date  = $('#today').val()
+			const id_film = $('.findFilm').val()
 			const today = new Date($('#today').val()).getDay()
 			$( '.nav-link' ).removeClass( "active" )
 			$('.'+today).attr('class','nav-link active')
@@ -283,7 +285,7 @@
                     },
                     type: 'post',
                     url: path +'admin/showtime/date',
-                    data : {date:date},
+                    data : {date:date,id_film:id_film},
                     success : function(data) {
                     	//console.log(data)
                     	//alert(data)
@@ -300,8 +302,8 @@
 		})
 
 		// function find room (Tìm suất chiếu theo phòng)
-		$('.findRoom').on('change',function(){
-			const id_room = $('.findRoom').val()
+		$('.findFilm').on('change',function(){
+			const id_film = $('.findFilm').val()
 			const date = $('#today').val()
 			$.ajax({
                     headers: {
@@ -309,7 +311,7 @@
                     },
                     type: 'post',
                     url: path +'admin/showtime/find',
-                    data : {date:date,id_room:id_room},
+                    data : {date:date,id_film:id_film},
                     success : function(data) {
                     	//console.log(data)
                     	//alert(data)
@@ -324,6 +326,32 @@
                     }
             	})
 		})
+
+		// Load film from when film change
+		// $('.film').on('change',function(){
+		// 	const id_film = $('.film').val()
+		// 	const date = $('#today').val()
+		// 	$.ajax({
+  //                   headers: {
+  //                       'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+  //                   },
+  //                   type: 'post',
+  //                   url: path +'admin/showtime/loadfilm',
+  //                   data : {date:date,id_film:id_film},
+  //                   success : function(data) {
+  //                   	//console.log(data)
+  //                   	//alert(data)
+  //                   	$('.load-showtime').html(data)
+  //                   	//let columns = data;
+  //                   	//$('.columns').html('')
+  //                   	//columns.forEach(item => $( ".columns" ).append('<option>'+item+'</option>'))
+  //                   },
+  //                   error : function(error) {
+  //                       console.log(error)
+  //                       //console.log(error)
+  //                   }
+  //           	})
+		// })
 	</script>
 
 @endsection

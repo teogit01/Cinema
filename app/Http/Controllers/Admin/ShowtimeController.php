@@ -21,17 +21,18 @@ use Illuminate\Support\Collection;
 class ShowtimeController extends Controller
 {
     public function index(){
-    	$films = film::all();
+    	//$films = film::all();
+        $films = film::where('status',1)->get();
     	$rooms = room::all();
     	//$t = date('Y-d-m');
     	//return $t;
     	$showtimes = showtime::where('date','=',date('Y-m-d'))->get();
-    	$showtimeM = showtime::where([['date','=',date('Y-m-d')],['start','<=','12:00']])->orderBy('start','asc')->get();
-    	$showtimeA = showtime::where([['date','=',date('Y-m-d')],['start','>','12:00'],['start','<','17:00']])->orderBy('start','asc')->get();
-    	$showtimeE = showtime::where([['date','=',date('Y-m-d')],['start','>=','17:00']])->orderBy('start','asc')->get();
+    	$showtimeM = showtime::where([['date','=',date('Y-m-d')],['start','<=','12:00'],['id_film',$films[0]->id]])->orderBy('start','asc')->get();
+    	$showtimeA = showtime::where([['date','=',date('Y-m-d')],['start','>','12:00'],['start','<','17:00'],['id_film',$films[0]->id]])->orderBy('start','asc')->get();
+    	$showtimeE = showtime::where([['date','=',date('Y-m-d')],['start','>=','17:00'],['id_film',$films[0]->id]])->orderBy('start','asc')->get();
 
     	//return $showtimes;
-    	//$thu = Carbon::now()->dayOfWeek;
+    	//$thu = Carbon::now();
     	$thu = Carbon::create(2020,6,7);
     	if ($thu->dayOfWeek == 0){
     		$d = $thu->day;
@@ -186,14 +187,15 @@ class ShowtimeController extends Controller
     public function showtimeOfDay(Request $request){
     	
     	$date = $request->date;
+        $id_film = $request->id_film;
     	//return $date;
     	//$showtimes = showtime::where('date','=',$date)->get();
     	//$showtimes = showtime::where('date','=',$date)->get();
     	//$showtimes = showtime::where('date','=',$date)->get();
     	$showtimes = showtime::where('date','=',$date)->get();
-    	$showtimeM = showtime::where([['date','=',$date],['start','<=','12:00']])->orderBy('start','asc')->get();
-    	$showtimeA = showtime::where([['date','=',$date],['start','>','12:00'],['start','<','17:00']])->orderBy('start','asc')->get();
-    	$showtimeE = showtime::where([['date','=',$date],['start','>=','17:00']])->orderBy('start','asc')->get();
+    	$showtimeM = showtime::where([['date','=',$date],['start','<=','12:00'],['id_film',$id_film]])->orderBy('start','asc')->get();
+    	$showtimeA = showtime::where([['date','=',$date],['start','>','12:00'],['start','<','17:00'],['id_film',$id_film]])->orderBy('start','asc')->get();
+    	$showtimeE = showtime::where([['date','=',$date],['start','>=','17:00'],['id_film',$id_film]])->orderBy('start','asc')->get();
     	//$dates = json_decode(Storage::get('public/date.txt'));
     	//	return $date;
     	//return $showtimes;
@@ -203,6 +205,7 @@ class ShowtimeController extends Controller
     // Function showtime of day (Ngày Tháng đc chọn)
     public function showtimeOfDate(Request $request){
      	$date = $request->date;
+        $id_film = $request->id_film;
     	//return $date;
     	//$showtimes = showtime::where('date','=',$date)->get();
     	//$showtimes = showtime::where('date','=',$date)->get();
@@ -210,9 +213,9 @@ class ShowtimeController extends Controller
     	//$showtimes = showtime::where('date','=',$date)->get();
 
     	$showtimes = showtime::where('date','=',$date)->get();
-    	$showtimeM = showtime::where([['date','=',$date],['start','<=','12:00']])->orderBy('start','asc')->get();
-    	$showtimeA = showtime::where([['date','=',$date],['start','>','12:00'],['start','<','17:00']])->orderBy('start','asc')->get();
-    	$showtimeE = showtime::where([['date','=',$date],['start','>=','17:00']])->orderBy('start','asc')->get();
+    	$showtimeM = showtime::where([['date','=',$date],['start','<=','12:00'],['id_film',$id_film]])->orderBy('start','asc')->get();
+    	$showtimeA = showtime::where([['date','=',$date],['start','>','12:00'],['start','<','17:00'],['id_film',$id_film]])->orderBy('start','asc')->get();
+    	$showtimeE = showtime::where([['date','=',$date],['start','>=','17:00'],['id_film',$id_film]])->orderBy('start','asc')->get();
     	//$dates = json_decode(Storage::get('public/date.txt'));
     	//	return $date;
     	//return $showtimes;
@@ -235,14 +238,25 @@ class ShowtimeController extends Controller
     }
 
     // Function find of room
-    public function findOfRoom(Request $request){
+    public function findOfFilm(Request $request){
     	$date = $request->date;
-    	$id_room = $request->id_room;
+    	$id_film = $request->id_film;
 
-    	$showtimeM = showtime::where([['date','=',$date],['id_room','=',$id_room],['start','<=','12:00']])->orderBy('start','asc')->get();
-    	$showtimeA = showtime::where([['date','=',$date],['id_room','=',$id_room],['start','>','12:00'],['start','<','17:00']])->orderBy('start','asc')->get();
-    	$showtimeE = showtime::where([['date','=',$date],['id_room','=',$id_room],['start','>=','17:00']])->orderBy('start','asc')->get();
+    	$showtimeM = showtime::where([['date','=',$date],['id_film','=',$id_film],['start','<=','12:00']])->orderBy('start','asc')->get();
+    	$showtimeA = showtime::where([['date','=',$date],['id_film','=',$id_film],['start','>','12:00'],['start','<','17:00']])->orderBy('start','asc')->get();
+    	$showtimeE = showtime::where([['date','=',$date],['id_film','=',$id_film],['start','>=','17:00']])->orderBy('start','asc')->get();
     	return view('admin.showtime.updateShowtime',['showtimeM'=>$showtimeM,'showtimeA'=>$showtimeA,'showtimeE'=>$showtimeE]);
+    }
+
+    // load showtime for film
+    public function loadFilm(Request $request){
+        $date = $request->date;
+        $id_film = $request->id_film;
+
+        $showtimeM = showtime::where([['date','=',$date],['id_film','=',$id_film],['start','<=','12:00']])->orderBy('start','asc')->get();
+        $showtimeA = showtime::where([['date','=',$date],['id_film','=',$id_film],['start','>','12:00'],['start','<','17:00']])->orderBy('start','asc')->get();
+        $showtimeE = showtime::where([['date','=',$date],['id_film','=',$id_film],['start','>=','17:00']])->orderBy('start','asc')->get();
+        return view('admin.showtime.updateShowtime',['showtimeM'=>$showtimeM,'showtimeA'=>$showtimeA,'showtimeE'=>$showtimeE]);
     }
 }
 

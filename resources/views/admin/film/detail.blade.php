@@ -7,15 +7,15 @@
         width: 90px;
     }
     .main-content { width: 100%; display: flex; }
-    .left { width: 55%; box-shadow: 10px 10px 10px #ddd; }
-    .right { width: 45%;box-shadow: 10px 10px 10px #ddd;text-align: center; height: 500px;}
+    .left { width: 60%; box-shadow: 10px 10px 10px #ddd; height: 580px; }
+    .right { width: 40%;box-shadow: 10px 10px 10px #ddd;text-align: center; height: 500px;}
 
     .th { --box-shadow: 1px 2px 10px #aaa; }
     .tr:hover { transform: scale(1.01);transition: 0.1s; box-shadow: 1px 1px 10px #ddd; color: #618985 }
     table { width: 100%; }
     tr { border-bottom: 1px solid #eee; line-height: 40px; }
-    th { width: 40% }
-    td { width: 60% }
+    th { width: 35% }
+    td { width: 65% }
     input { border: none; width: 100%; background-color: #fff }
     input:focus { outline: none;--display: none }
   </style>
@@ -64,6 +64,42 @@
           			<th>Ngày công chiếu</th>
           			<td><input type="date" name="openday" class="open" value="{{$film->openday}}" disabled autocomplete="off"></td>
           		</tr>
+              <tr>
+                <th>Thể loại</th>
+                <td>
+                  <select class="form-control selectpicker" style="background-color: #aaa " multiple data-size="auto" title="   @foreach($genres as $genre)
+                                               {{$genre}}, 
+                                              @endforeach"
+                                  name="genre[]">
+                        
+                      @foreach($genres as $genre)
+                        <option>{{$genre}}</option>
+                      @endforeach
+                        <option data-divider="true"></option>
+                        @foreach($diffGenre as $dgenre)
+                        <option>{{$dgenre}}</option>
+                      @endforeach
+                  </select>
+                </td>
+              </tr>
+              <tr>
+                <th>Quốc gia</th>
+                <td>
+                  <select class="form-control selectpicker" style="background-color: #aaa " multiple data-size="auto" title="   @foreach($countrys as $country)
+                                               {{$country}}, 
+                                              @endforeach"
+                                  name="country[]">
+                        
+                      @foreach($countrys as $country)
+                        <option>{{$country}}</option>
+                      @endforeach
+                        <option data-divider="true"></option>
+                      @foreach($diffCountry as $dcountry)
+                        <option>{{$dcountry}}</option>
+                      @endforeach
+                  </select>
+                </td>
+              </tr>
           		<tr>
           			<th>Trạng thái</th>
           			<td><input type="number" name="status" class="open" value="" placeholder="{{$film->status}}" disabled autocomplete="off" max="1" min="0"></td>
@@ -71,7 +107,7 @@
           		<tr>
           			<th>Tóm tắt</th>
           			<td>
-          				<input type="text" name="trailer" class="open" value="" disabled placeholder="{{ $film->trailer }}" autocomplete="off">
+          				<input id="trailer" type="text" name="trailer" class="open" value="" disabled placeholder="{{ $film->trailer }}" autocomplete="off">
           			</td>
           		</tr>
           		<tr>
@@ -84,7 +120,7 @@
           	</div>
           </div>
           <div class="right">
-          	<img style="width: 60%;height: 75%;" src="{{asset('img/poster')}}/{{$film->poster}}">
+          	<img style="width: 70%;height: 80%;" src="{{asset('img/poster')}}/{{$film->poster}}">
           	<br>
           	<br>
           	<input type="file" name="image" class="form-contro" style="text-align: center;width: 60%;">
@@ -109,5 +145,11 @@
         	$('.open').removeAttr('disabled')
             $('.open')[0].focus();
         })
+
+        var trailer = document.getElementById('trailer');
+        //alert(trailer.placeholder)
+        trailer.placeholder = trailer.placeholder.replace("<p>", "");
+        trailer.placeholder = trailer.placeholder.replace("</p>", "");
+
         </script>
 @endsection

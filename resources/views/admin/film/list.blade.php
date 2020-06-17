@@ -72,6 +72,8 @@
                 @endforeach
             </table>
         </div>
+        <br>
+        <div style="display: flex; justify-content: center;">{{$films->links()}}</div>
     </div>
 
         <script type="text/javascript">

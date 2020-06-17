@@ -16,16 +16,17 @@ class user extends BaseModel{
 
     protected $fillable = [
         'id',
-        'user',
-        'pass',
+        'password',
         'code',
         'name',
+        'avatar',
         'email',
         'phone',
         'birthday',
         'address',
         'point',
         'role',
+        'gender',
         
         'created_at',
         'updated_at',

@@ -1,7 +1,7 @@
 @extends('admin.layouts.index')
 @section('content')
 <style type="text/css">
-	.main-content { width: 100%; display: flex }
+	.main-content { width: 100%; display: flex;font-size: 16px  }
 	.left { width: 60%; box-shadow: 10px 10px 10px #ddd; padding:10px; }	
 	.right { width: 40%;margin-left:40px; box-shadow: 10px 10px 10px #ddd;padding:10px; max-height: 400px;height:170px;}
 	table { width: 100% }

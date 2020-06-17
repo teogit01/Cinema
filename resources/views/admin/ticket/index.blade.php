@@ -1,10 +1,12 @@
 @extends('admin.layouts.index')
 @section('content')
+
+<link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css">
 <style type="text/css">
-	.main-content { width: 100%; display: flex }
-	.left { width: 60%; box-shadow: 10px 10px 10px #ddd; padding:10px; }	
+	.main-content { width: 100%; display: flex;font-size: 16px  }
+	.left { width: 100%; box-shadow: 10px 10px 10px #ddd; padding:10px; }	
 	.right { width: 40%;margin-left:40px; box-shadow: 10px 10px 10px #ddd;padding:10px; --max-height: 600px;height:280px;}
-	table { width: 100% }
+	table { width: 100%; margin-top: -30px; }
 	tr { border-bottom: 1px solid #eee; line-height: 40px; }
 	.td-code { width: 30%; }
 	.td-name { width: 50% }
@@ -12,123 +14,118 @@
 	.a { cursor: pointer; }
 	input { border: none; background-color: #fff; }
 	input:focus { outline: none }
+	.th { --box-shadow: 2px 1px 20px #ddd; background-color: #aaa; border-radius: 15px}
+	tr:hover { color: green }
 </style>
 <br>
-	<div style="margin-left: 10%"><h3>Quản lí Vé Đặt</h3></div>
+	<div style="margin-left: 5%;width: 100%;display: flex;">
+		<div style="width: 50%"><h3>Quản lí Vé Đặt</h3></div>
+    	<input class="form-control mr-sm-2" id='search' style="width: 50%;" type="text" placeholder="Tìm khách hàng ..." aria-label="Search">
+	</div>
 	@if($message = Session::get('success'))
         <div class="alert alert-success" role="alert" id='showMessage'
             style="position: fixed;width: 50%;padding: 7px; right: 0px;top:10%;">
             <span>{{$message}}</span>
         </div>
-    @endif
+    @endif	
+    
 	<hr>
 	<meta name="csrf-token" content="{{ csrf_token() }}">
-	<div style="width: 55%;margin-left: 3%;">
-		<select name="" class="form-control room">
-			@if(!empty($rooms))
-			@foreach($rooms as $room)
-				<option value="{{$room->id}}">{{$room->name}}</option>
-			@endforeach
-			@endif
-		</select>
+	<div style="width: 100%;margin-left: 3%;display: flex;">
+		<div style="width: 20%">
+			<select name="" class="form-control films">
+				<option value=0>Tất cả vé đặt</option>
+				@if(!empty($films))
+				@foreach($films as $film)
+				<option value="{{$film->id}}">{{$film->name}}</option>
+				@endforeach
+				@endif
+			</select>
+		</div> &nbsp;
+		<div style="width: 20%">
+			<input type="date" class="form-control date" name="" value="{{date('Y-m-d')}}">
+		</div>
 	</div>
-	<div class="content">
-		<div class="main-content load-data">
-			<div class="left">
-				<table class="load-left">
-					<tr>
-						<th>Mã Ghế</th>
-						<th>Tên Ghế</th>
-						<th></th>
-					</tr>
-					@if(!empty($seats))
-						@foreach ($seats as $index => $seat)
-						<tr ondblclick='open1({{$seat->id}})'>
-							
-								<td class="td-code"><input style="width: 100%" type="text" name="code" placeholder="{{$seat->code}}" disabled autocomplete="off"></td>
-								<td class="td-name"><input class="{{$seat->id}}" type="text" id="{{$seat->id}}" name="name" placeholder="{{$seat->name}}" disabled autocomplete="off"></td>
-								<td class="sub-action">
-									<img class="a" onclick="del({{$seat->id}})" style="width: 20px; height:20px;" src="{{asset('icon/eraser.png')}}"></a>
-									<!-- <button type="submit" style="display: none;" id='sm'></button> -->
-								</td>
-							
+	<div class="content" style="padding-left: 5px; padding-right: 5px;">
+		<div class="main-content">
+			<div class="left load-data">
+				<table class="">
+					<tr class="th">
+						<th style="width: 5%;">#</th>
+						<th style="width: 15%;">Khách</th>
+						<th style="width: 20%;">Ngày</th>
+						<th style="width: 10%;">Phim</th>
+						<th style="width: 15%;">Xuất chiếu</th>
+						<th style="width: 10%;">Ghế</th>
+						<th style="width: 20%;">Giá</th>
+					</tr>					
+					@if(!empty($tickets))
+						@foreach ($tickets as $index => $ticket)
+						<tr>
+							<td>{{ $index+1 }}</td>
+							<td></td>
+							<td>{{ $ticket->date }}</td>
+							<td>{{ $ticket->film->name }}</td>
+							<td>{{ $ticket->showtime->start }}~{{ $ticket->showtime->end }}</td>
+							<td>{{ $ticket->seat->name }}</td>
+							<td>{{ $ticket->price }} K</td>
 						</tr>
 						@endforeach
 					@endif
 				</table>
 			</div>
-			<div class="right">
-				<form action="#" method="" class="load-right">
-					@csrf
-					<label><h5>Chọn Hàng Ghế</h5></label>
-					<select class="form-control rows" name="row">
-						<option></option>
-						<option value="A">A</option>
-						<option value="B">B</option>
-						<option value="C">C</option>
-						<option value="D">D</option>
-						<option value="E">E</option>
-						<option value="F">F</option>
-						<option value="G">G</option>
-						<option value="H">H</option>
-						<option value="I">I</option>
-						<option value="J">J</option>
-					</select>
-					<br>
-					<label><h5>Chọn Cột Ghế</h5></label>					
-					<select class="form-control columns" name="column">
-						<!-- <option value="1">1</option>
-						<option value="2">2</option>
-						<option value="3">3</option>
-						<option value="4">4</option>
-						<option value="5">5</option>
-						<option value="6">6</option>
-						<option value="7">7</option>
-						<option value="8">8</option>
-						<option value="9">9</option>
-						<option value="10">10</option> -->
-					</select>
-					<!-- <input type="text" name="name" id='name' class="form-control" autocomplete="off"> -->
-					<input type="text" name="room_id" id='room_id' class="room_id" style="display: none;">
-					<br>
-					<a class="btn btn-info btn-block" onclick="add()">Thêm</a>
-				</form>
-			</div>
 		</div>
 	</div>
 
 	<script type="text/javascript">
-		$(document).ready(function(){
-            setTimeout(function(){
-                $('#showMessage').hide()            
-            },2000)
-        })
-        
-		$(document).ready(function(){
-			const room_id = $('.room').val()
-			$('#room_id').val(room_id)
-			//$('#room_id').val()
-		})
-		$('.room').on('change',function(){
-			const room_id = $('.room').val()
-			$('#room_id').val(room_id)
-			$(document).ready(function(){
-				$('.rows').val('')
-				$('.columns').val('')
-			})
+		// Autocomplete
+		// var names = ['phanlac','a']
+		// $('#search').on('keyup',function(){
+		// 	const value = $('#search').val()
+		// 	//console.log(names)
+		// 	$('#search').autocomplete({
+		// 			source: names
+		// 	})
+		// })
+		$('#search').on('change',function(){
+			const name = $('#search').val()
+			const id_film = $('.films').val()
+			const date = $('.date').val()
 			$.ajax({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     type: 'post',
-                    url: path +'admin/seat/',
-                    data : {room_id: room_id},
+                    url: path +'admin/ticket/find',
+                    data : {id_film: id_film,date:date,name:name},
+                    success : function(data) {
+                    	//alert(data)
+                        $('.load-data').html(data)
+                        //console.log(data)
+                        
+                    },
+                    error : function(error) {
+                    	
+                        alert('error')
+                        //console.log(error)
+                    }
+            	})     
+		})
+
+		$('.films').on('change',function(){
+			const id_film = $('.films').val()
+			const date = $('.date').val()
+			$.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    type: 'post',
+                    url: path +'admin/ticket/find',
+                    data : {id_film: id_film,date:date},
                     success : function(data) {
 
-                        $('.load-left').html(data)
-                        //$('#comment').val('')
-                        //$('#count-comment').val(countComment-1)
-                        //alert(data)
+                        $('.load-data').html(data)
+                        
                     },
                     error : function(error) {
                     	
@@ -138,54 +135,30 @@
             	})     
 			//window.location= path+'admin/seat/'+room_id;
 		})
-		// add seat from room
-		function add(){
-			const row = $('.rows').val()
-			const column = $('.columns').val()
-			const room_id = $('#room_id').val()
+		$('.date').on('change',function(){
+			const id_film = $('.films').val()
+			const date = $('.date').val()
 			$.ajax({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
                     type: 'post',
-                    url: path +'admin/seat/add',
-                    data : {row:row,room_id:room_id,column:column},
+                    url: path +'admin/ticket/find',
+                    data : {id_film: id_film,date:date},
                     success : function(data) {
-                    	$('.load-left').html(data)
-                    	//alert(data);
+
+                        $('.load-data').html(data)
+                        
                     },
                     error : function(error) {
+                    	
                         alert('error')
                         //console.log(error)
                     }
-            	})
-
-		}
-
-		// Change ROWS
-		$('.rows').on('change',function(){
-			const room_id = $('#room_id').val()
-			const row = $('.rows').val()
-			//alert(row)
-			$.ajax({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    type: 'post',
-                    url: path +'admin/seat/select',
-                    data : {row:row,room_id:room_id},
-                    success : function(data) {
-
-                    	let columns = data;
-                    	$('.columns').html('')
-                    	columns.forEach(item => $( ".columns" ).append('<option>'+item+'</option>'))
-                    },
-                    error : function(error) {
-                        alert('error')
-                        //console.log(error)
-                    }
-            	})
+            	})     
+			//window.location= path+'admin/seat/'+room_id;
 		})
+
 
 	</script>
 @endsection

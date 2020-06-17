@@ -59,7 +59,7 @@
                         <a href="{{route('admin.ticket')}}" class="dropdown-toggle" data-toggle="dropdow" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-table"></i>Vé Đặt</a>
                     </li>
                     <li class="menu-item-has-children dropdown">
-                        <a href="{{route('admin.country')}}" class="dropdown-toggle" data-toggle="dropdow" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-table"></i>Tài Khoản</a>
+                        <a href="{{route('admin.account')}}" class="dropdown-toggle" data-toggle="dropdow" aria-haspopup="true" aria-expanded="false"> <i class="menu-icon fa fa-table"></i>Tài Khoản</a>
                     </li>
                     <li class="menu-title">Icons</li><!-- /.menu-title -->
 
