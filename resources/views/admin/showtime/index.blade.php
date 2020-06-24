@@ -15,7 +15,7 @@
 </style>
 <br>
 	<div style="display: flex; width: 100%;align-items: center;">
-		<div style="margin-left: 5%;width: 30%"><h3>Quản lí Xuất Chiếu</h3></div>
+		<div style="margin-left: 3%;font-size: 20px;display: flex;width:30%"><b>Quản lý Xuất Chiếu</b></div>
 			<div style="display: flex;justify-content: flex-end;width: 50%;align-items: center;">
 				<label for='today' style="width: 15%"><h5>Ngày:</h5></label>
 				<input id='today' type="date" name="" value="{{date('Y-m-d')}}" class="form-contro" style="width: 30%">
@@ -198,6 +198,7 @@
 			const date = $('.date').val()
 			const start = $('.start').val()
 			
+
 			$.ajax({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -207,12 +208,13 @@
                     data : {film_id:film_id,date:date,start:start},
                     success : function(data) {
                     	//alert(data)
+                    	//console.log(data);
                     	let rooms = data;
                     	$('.rooms').html('')
                     	rooms.forEach(item => $( ".rooms" ).append('<option value="'+item+'"">Phòng '+item+'</option>'))
                     },
                     error : function(error) {
-                        alert('error')
+                        //alert('error')
                         //console.log(error)
                     }
             	})

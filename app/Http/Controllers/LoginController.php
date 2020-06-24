@@ -27,7 +27,7 @@ class LoginController extends Controller
     			if ( Hash::check($password,$user->password) ){
     				if ( $user->role== 'Admin' ){
             //return view('admin.index');
-    					return redirect('admin');
+    					return redirect('admin/film/list');
     				} else {
             //custom
                 // return view('user');

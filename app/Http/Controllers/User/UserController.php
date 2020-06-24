@@ -25,10 +25,25 @@ class UserController extends Controller
 {
     public function home(){
 
-    	$films = film::where('status',1)->get();
+        $filmAll = film::all();
+        $showtimes = showtime::all();
+    	$films = film::where([['status',1],['openday','<',date('Y-m-d')]])->get();
 
-    	return view('user.home',['films'=>$films]);
+    	return view('user.home',['films'=>$films,'filmAll'=>$filmAll,'showtimes'=>$showtimes]);
     }
+
+    public function commingsoon(Request $request){
+
+        $type = $request->type;
+        if ($type == 'showing'){
+            $films = film::where([['status',1],['openday','<',date('Y-m-d')]])->get();
+        } else {
+            $films = film::where([['status',1],['openday','>=',date('Y-m-d')]])->get();
+        }
+
+        return view('user.commingsoon',['films'=>$films]);
+    }
+
 
     public function detail(Request $request){
     	$id_film = $request->id;
@@ -80,9 +95,9 @@ class UserController extends Controller
 
   	// rate
     public function rate(Request $request){
-    	
+    
     	if(Auth::check()){
-    		$check = rate::where('user_id',Auth::id())->get();	
+    		$check = rate::where([['user_id',Auth::id()],['film_id',$request->id_film]])->get();	
     		if (count($check)==1){
     			return back();
     		} else {
@@ -92,6 +107,14 @@ class UserController extends Controller
     			$rate->comment = $request->comment;
     			$rate->user_id = Auth::id();
     			$rate->save();
+                
+                $rates = rate::where('film_id',$request->id_film)->get();
+                
+                $film = film::find($request->id_film);
+
+                $film->star = number_format((float)($film->star + $request->star )/count($rates),1,'.','.');
+                
+                $film->save();
     			return back()->with('danhgia','danhgia');
     		}
     	} else {
@@ -243,6 +266,18 @@ class UserController extends Controller
         
         return back()->with('success','Cập nhật thành công!');  
         
+    }
+
+    public function find(Request $request){
+
+        $key = $request->key;
+        
+        //$filmAll = film::all();
+        //$showtimes = showtime::all();
+        $films = film::where([['status',1],['openday','<',date('Y-m-d')],['name','like','%'.$key.'%']])->get();
+
+        return view('user.find',['films'=>$films]);
+        //$cars = CarDetail::where('name','like','%'.$request->key.'%')->get();
     }
 
 }

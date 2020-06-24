@@ -14,7 +14,7 @@
 	input:focus { outline: none }
 </style>
 <br>
-	<div style="margin-left: 10%"><h3>Quản lí Quốc Gia</h3></div>
+	<div style="margin-left: 3%;font-size: 20px;display: flex;"><b>Quản lý Quốc Gia</b></div>
 	@if($message = Session::get('success'))
         <div class="alert alert-success" role="alert" id='showMessage'
             style="position: fixed;width: 50%;padding: 7px; right: 0px;top:10%;">

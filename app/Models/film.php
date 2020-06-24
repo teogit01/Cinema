@@ -27,6 +27,7 @@ class film extends BaseModel{
         'poster',
         'status',
         'banner',
+        'description',
         'star',
         
         // 'id_genre',

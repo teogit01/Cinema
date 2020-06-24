@@ -20,11 +20,12 @@ class CreateFilmsTable extends Migration
             $table->integer('runtime')->nullable();
             $table->string('director')->nullable();
             $table->string('cast')->nullable();
-            $table->string('trailer')->nullable();
+            $table->string('description')->nullable();
             $table->date('openday')->nullable();
             $table->integer('openday')->nullable();
             $table->text('poster')->nullable();
             $table->string('status')->nullable();
+            $table->string('trailer')->nullable();
             $table->string('banner')->nullable();
             $table->float('star')->nullable();
 

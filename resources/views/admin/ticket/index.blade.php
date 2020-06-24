@@ -3,7 +3,7 @@
 
 <link rel="stylesheet" type="text/css" href="https://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css">
 <style type="text/css">
-	.main-content { width: 100%; display: flex;font-size: 16px  }
+	.main-content { width: 100%; display: flex; --font-size: 16px  }
 	.left { width: 100%; box-shadow: 10px 10px 10px #ddd; padding:10px; }	
 	.right { width: 40%;margin-left:40px; box-shadow: 10px 10px 10px #ddd;padding:10px; --max-height: 600px;height:280px;}
 	table { width: 100%; margin-top: -30px; }
@@ -18,8 +18,8 @@
 	tr:hover { color: green }
 </style>
 <br>
-	<div style="margin-left: 5%;width: 100%;display: flex;">
-		<div style="width: 50%"><h3>Quản lí Vé Đặt</h3></div>
+	<div style="margin-left: 3%;font-size: 20px;display: flex;">
+		<div style="width: 50%"><b>Quản lý Vé Đặt</b></div>
     	<input class="form-control mr-sm-2" id='search' style="width: 50%;" type="text" placeholder="Tìm khách hàng ..." aria-label="Search">
 	</div>
 	@if($message = Session::get('success'))
@@ -46,6 +46,7 @@
 			<input type="date" class="form-control date" name="" value="{{date('Y-m-d')}}">
 		</div>
 	</div>
+	<br>
 	<div class="content" style="padding-left: 5px; padding-right: 5px;">
 		<div class="main-content">
 			<div class="left load-data">
@@ -63,7 +64,7 @@
 						@foreach ($tickets as $index => $ticket)
 						<tr>
 							<td>{{ $index+1 }}</td>
-							<td></td>
+							<td>{{ $ticket->user->name }}</td>
 							<td>{{ $ticket->date }}</td>
 							<td>{{ $ticket->film->name }}</td>
 							<td>{{ $ticket->showtime->start }}~{{ $ticket->showtime->end }}</td>

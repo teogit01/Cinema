@@ -33,7 +33,7 @@ class ShowtimeController extends Controller
 
     	//return $showtimes;
     	//$thu = Carbon::now();
-    	$thu = Carbon::create(2020,6,7);
+    	$thu = Carbon::create(2020,6,14);
     	if ($thu->dayOfWeek == 0){
     		$d = $thu->day;
     		$m = $thu->month;
@@ -118,69 +118,80 @@ class ShowtimeController extends Controller
     	$film_id = $request->film_id;
     	$date = $request->date;
     	$timeStart = $request->start;
+
     	
-    	$rooms = room::all();
-    	foreach ($rooms as $room){
-
-	    	$showtimes = showtime::where([['id_film','=',$film_id],['date','=',$date],['id_room','=',$room->id]])->get();
-	    	if (isset($howtimes)){
-		    	// find time not add
-		    	foreach ($showtimes as $showtime) {
-		    		//if ($showtime->start)
-		    		$start =  Carbon::create($showtime->start)->hour;
-		    		$end =  Carbon::create($showtime->end)->hour;
-		    		while ($start <= $end){
-		    			$hourNotAdd[] = $start;
-		    			$start++;
-		    		}
-		    	}
-		    	// time start end not add
-
-		    	$runtime = film::find($film_id)->runtime;
-
-		    	$hour = floor($runtime / 60);
-		    	$minute = $runtime % 60;
-		    	//$minute = 70;
-		    	if ($minute >= 60){
-		    		$hour = $hour + 1;
-		    		$minute = $minute % 60;
-		    	}
-		    	
-		    	$timeStart = Carbon::create($timeStart);
-		    	
-		    	$startHour = $timeStart->hour;
-		    	$startMinute = $timeStart->minute;
-		    	if (($startMinute + $minute)>=60){
-		    		$hour = $hour + 1;
-		    		$minute = $minute % 60;
-		    	} 
-
-		    	$endHour = $timeStart->addHour($hour)->hour;
-		    	$endMinute = $timeStart->addMinute($minute)->minute;
-		    	if ($hour < 10){
-		    		$hour = '0'.$hour;
-		    	}
-		    	if ($minute < 10){
-		    		$minute = '0'.$minute;
-		    	}
-		    	$timeEnd = $endHour.':'.$endMinute;
-		    	
-		    	if (!in_array($endHour,$hourNotAdd) && !in_array($startHour, $hourNotAdd)){
-		    		// dc them
-		    		$roomIds[] = $room->id;
-		    		//return $room->id;
-		    	}
-	    	} else {
-	    		$roomIds[] = $room->id;
-	    	}
-	    }// end foreach rooms
-
-    	return $roomIds;
-    	// return $endHour;	
-    	
-    	// return $timeEnd;
-    	// return $timeStart;
-    	// return $hourNotAdd;
+    	//$rooms = room::all();
+    
+	    	$showtimes = showtime::where('date','=',$date)->get();
+            if (count($showtimes)>0){
+                foreach ($showtimes as $showtime){
+                    $runtime = film::find($film_id)->runtime;
+                    
+                    $hourAdd = floor($runtime / 60);
+                    $minuteAdd = $runtime % 60;
+                 //$minute = 70;
+                    if ($minuteAdd >= 60){
+                        $hourAdd = $hourAdd + 1;
+                        $minuteAdd = $minuteAdd % 60;
+                    }
+                    $startHour = Carbon::create($timeStart)->hour;
+                    $startMinute = Carbon::create($timeStart)->minute;
+                    if (($startMinute + $minuteAdd)>=60){
+                        $hourAdd = $hourAdd + 1;
+                        $minuteAdd = 60 - ($startMinute + $minuteAdd);
+                    }
+                    
+                    $endHour = $startHour + $hourAdd;
+                    $endMinute = $startMinute + $minuteAdd;
+                    if ($endHour<10){
+                        $endHour = '0'.$endHour;
+                    }
+                    if ($endMinute<10){
+                        $endMinute = '0'.$endMinute;
+                    }
+                    $end = $endHour.':'.$endMinute;
+                    
+                    
+                    $showStart =  Carbon::create($showtime->start)->hour;
+                    $showEnd =  Carbon::create($showtime->end)->hour;
+                    
+                    while ($showStart <= $showEnd){
+                        $hourNotAdd[] = $showStart;
+                        $showStart++;
+                    }
+                    
+                    if (in_array($endHour,$hourNotAdd) || in_array($startHour, $hourNotAdd))
+                     // k chon room
+                       $notRoom[] = $showtime->id_room;
+                     //return $room->id;
+               }    
+            } else {
+                $room = room::all();
+                foreach($room as $r){
+                    $rooms[] = $r->id;
+                }
+                return $rooms;
+            }
+            
+            if (isset($notRoom)){
+                $room = room::all();
+                foreach($room as $r){
+                    $rooms[] = $r->id;
+                }
+                $diff = array_diff($rooms,$notRoom);   
+                foreach ($diff as $key => $value) {
+                    $rom[] = $value;
+                }
+                return $rom;
+                
+            } else {
+                $room = room::all();
+                foreach($room as $r){
+                    $rooms[] = $r->id;
+                }
+                return $rooms;
+            }
+            
     }
    
     // Function showtime of day (Thứ trong tuần)

@@ -20,8 +20,10 @@
 	.img { width: 15px; }
 </style>
 <br>
-	<div style="margin-left: 10%;display: flex;">
-		<h3 style="width: 70%">Quản lí ghế ngồi</h3>
+
+	<div style="margin-left: 3%;display: flex;width: 100%">
+		<div style="width: 80%"><h3 style="font-size: 20px"><b>Quản lý ghế ngồi</b></h3></div>
+		
 		<a href="{{route('admin.seat.list')}}" class="btn btn-info" style="width: 100px;">Thêm</a>
 	</div>
 	@if($message = Session::get('success'))
@@ -32,7 +34,7 @@
     @endif
 	<hr>
 	<meta name="csrf-token" content="{{ csrf_token() }}">
-	<div style="width: 100%;margin-left: 2%; display: flex;">
+	<div style="width: 100%;margin-left: 3%; display: flex;">
 		<div style="width: 20%;">
 			<select name="" class="form-control film">
 				@if(!empty($films))
@@ -54,10 +56,10 @@
 		</div>
 	</div>
 	<div class="load-showtime-film">
-		<div style="width: 100%;font-size: 13px; margin-left: 2%;margin-top: 10px;">
-		<div class="" style="padding: 10px;">
-			<div style="width: 100%;display: flex; flex-direction: column;">
-				<div style="width: 100%; display: flex;--justify-content: space-around;justify-content:flex-start;">
+		<div style="width: 100%;--font-size: 13px; margin-left: 2%;margin-top: 10px;">
+			<div class="" style="padding: 10px;">
+				<div style="width: 100%;display: flex; flex-direction: column;">
+					<div style="width: 100%; display: flex;--justify-content: space-around;justify-content:flex-start;">
 					@if (isset($showtimes))
 					@foreach($showtimes as $show)
 					<div  class="showtime" style="text-align: center;" onclick="detail({{$show->id}})">
@@ -67,24 +69,24 @@
 					</div>
 					@endforeach
 					@endif
-				</div>	
+					</div>	
+				</div>
 			</div>
-		</div>
-		<hr>
-		<div class="content">
-		<div class="main-content load-data" style="margin-top: -50px;font-size: 20px;">
-			<div class="left" style="text-align: center;width: 100%">
-				<div class="page_lich-chonghe-conten row" style="width: 100%;display: flex;">
-					<div class="page_lich-chonghe-content-manhinh" style="width: 100%">
-						Màn hình
-					</div>
-					<div class="page_lich-chonghe-content-ghe" style="width: 100%; justify-content: center;margin-left: 20%">
+			<hr>
+			<div class="content">
+				<div class="main-content load-data" style="margin-top: -50px;font-size: 20px;">
+					<div class="left" style="text-align: center;width: 100%">
+						<div class="page_lich-chonghe-conten row" style="width: 100%;display: flex;">
+							<div class="page_lich-chonghe-content-manhinh" style="width: 85%">
+								Màn hình
+							</div>
+							<div class="page_lich-chonghe-content-ghe" style="width: 100%; justify-content: center;margin-left: 20%">
                 
-						<div class="page_lich-chonghe-content-ghe">
-							@foreach($rows as $key => $row)
-							<div class="page_lich-chonghe-content-ghe-hang">
+							<div class="page_lich-chonghe-content-ghe">
+								@foreach($rows as $key => $row)
+								<div class="page_lich-chonghe-content-ghe-hang">
 								
-								<div class="page_lich-chonghe-content-ghe-tencot">{{$key}}</div>
+									<div class="page_lich-chonghe-content-ghe-tencot">{{$key}}</div>
 								
 									@for($i=1; $i<13; $i++)
 										@if(isset($row[$i]))
@@ -123,30 +125,30 @@
 											<div class="page_lich-chonghe-content-ghe-item-stt"></div>	
 										@endif
 									@endfor
-							</div>
-							@endforeach	
+									</div>
+								@endforeach	
 							
-						<div class="page_lich-chonghe-content-ghe-hang">
-							<div class="page_lich-chonghe-content-ghe-tencot"></div>
-							@for($i=1; $i<13; $i++)
+							<div class="page_lich-chonghe-content-ghe-hang">
+								<div class="page_lich-chonghe-content-ghe-tencot"></div>
+								@for($i=1; $i<13; $i++)
 								<div class="page_lich-chonghe-content-ghe-item-stt-2">{{$i}}</div>	
-							@endfor
+								@endfor
+							</div>
 						</div>
+						<br>
 					</div>
 					<br>
-				</div>
-				<br>
-				<div class="page_lich-chonghe-tutorial" style="width: 100%">
-					<div class="page_lich-chonghe-tutorial-item">
-						<div class="page_lich-chonghe-tutorial-item-color">
+					<div class="page_lich-chonghe-tutorial" style="width: 100%">
+						<div class="page_lich-chonghe-tutorial-item">
+							<div class="page_lich-chonghe-tutorial-item-color">
+							</div>
+							<div class="page_lich-chonghe-tutorial-item-title">
+								Ghế Vip
+							</div>
 						</div>
-						<div class="page_lich-chonghe-tutorial-item-title">
-							Ghế Vip
-						</div>
-					</div>
-					<div class="page_lich-chonghe-tutorial-item">
-						<div class="page_lich-chonghe-tutorial-item-color">
-						</div>
+						<div class="page_lich-chonghe-tutorial-item">
+							<div class="page_lich-chonghe-tutorial-item-color">
+							</div>
 						<div class="page_lich-chonghe-tutorial-item-title">
 							Ghế thường
 						</div>
@@ -173,7 +175,7 @@
 			</div>
 			
 		</div>
-		</div>
+	</div>
 	</div>
 
 	<script type="text/javascript">

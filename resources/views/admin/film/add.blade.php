@@ -1,6 +1,7 @@
 @extends('admin/layouts/index')
 @section('content')
   <style type="text/css">
+    .content { font-size: 15px; }
     .force{
     	color: red;
     }
@@ -100,20 +101,20 @@
                                                         @endforeach
                                                 	</select>
                                                 </div>	
-                                                <br>
-                                                <div class="col-sm-12 row">
-                                            		<div class="col-sm-2" >
-                                                		<label>Hình ảnh</label><span class="force">*</span>
-                                                	</div>                                                	
-                                                	<input type="file" name="image" multiple class="form-control col-sm-10" >
-                                                </div>	
 
                                                 <br>
                                                 <div class="col-sm-12 row">
                                                     <div class="col-sm-2" >
                                                         <label>poster</label><span class="force">*</span>
                                                     </div>                                                  
-                                                    <input type="file" name="banner" multiple class="form-control col-sm-10" >
+                                                    <input type="file" name="poster" multiple class="form-control col-sm-10" >
+                                                </div>  
+                                                <br>
+                                                <div class="col-sm-12 row">
+                                                    <div class="col-sm-2" >
+                                                        <label>Trailer</label><span class="force"></span>
+                                                    </div>                                                  
+                                                    <input type="text" name="trailer" class="form-control col-sm-10" >
                                                 </div>  
 
                                                 <br>
@@ -122,7 +123,7 @@
                                                 		 <label>Tóm tắt</label><span class="force">*</span>
                                                 	</div>
                                                 	<div class="col-sm-10" style="padding:0">                                                	
-                                                		<textarea class="form-control" name="trailer"id="trailer"></textarea>
+                                                		<textarea class="form-control" name="description"id="trailer"></textarea>
                                                 	</div>
                                                 </div>	
                                             </div>

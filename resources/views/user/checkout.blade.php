@@ -30,7 +30,7 @@
                     </div> -->
                     <div onclick="chon(2)" class="page_lich-header-nav-left-item page_lich-header-nav-left-item-active">
                         <div class="page_lich-header-nav-left-item-num">
-                            01
+                            
                         </div>
                         <div class="page_lich-header-nav-left-item-text">
                             Chọn ghế & thanh toán
@@ -297,7 +297,7 @@
                         Hình thức thanh toán:
                     </div>
                     <label class="page_lich-hoadon-content-thanhtoan-radio">
-                        <input checked type="radio" name="thanhtoan" value="visa">
+                        <input checked type="radio" name="thanhtoan"  class="tt" value="visa">
                         <div class="page_lich-hoadon-content-thanhtoan-radio-tick"></div>
                         <img class="page_lich-hoadon-content-thanhtoan-icon"
                             src="https://stcgateway.zalopay.vn/image/icon-visa.svg" alt="">
@@ -307,21 +307,21 @@
                             src="https://stcgateway.zalopay.vn/image/icon-jcb.svg" alt="">
                     </label>
                     <label class="page_lich-hoadon-content-thanhtoan-radio">
-                        <input type="radio" name="thanhtoan" value="zalopay">
+                        <input type="radio" name="thanhtoan"  class="tt" value="2">
                         <div class="page_lich-hoadon-content-thanhtoan-radio-tick"></div>
                         <img class="page_lich-hoadon-content-thanhtoan-icon"
                             src="https://stcgateway.zalopay.vn/image/icon-zpapp.svg" alt="">
                         <span>ZaloPay</span>
                     </label>
                     <label class="page_lich-hoadon-content-thanhtoan-radio">
-                        <input type="radio" name="thanhtoan" value="vietcombank">
+                        <input type="radio" name="thanhtoan" class="tt" value="0">
                         <div class="page_lich-hoadon-content-thanhtoan-radio-tick"></div>
                         <img class="page_lich-hoadon-content-thanhtoan-icon"
                             src="https://stcgateway.zalopay.vn/image/banks/bank-vcb.svg" alt="">
                         <span>Vietcombank</span>
                     </label>
                     <label class="page_lich-hoadon-content-thanhtoan-radio">
-                        <input type="radio" name="thanhtoan" value="sacombank">
+                        <input type="radio" name="thanhtoan" class="tt" value="1">
                         <div class="page_lich-hoadon-content-thanhtoan-radio-tick"></div>
                         <img class="page_lich-hoadon-content-thanhtoan-icon"
                             src="https://stcgateway.zalopay.vn/image/banks/bank-sacom.svg" alt="">
@@ -332,17 +332,16 @@
 
             </div>
             <div class="page_lich-hoadon-note">
-                <div class="page_lich-hoadon-note-text">
+                <!-- <div class="page_lich-hoadon-note-text">
                     <div class="page_lich-hoadon-note-tick">!</div> Vé đã mua không thể đổi hoặc hoàn tiền
                 </div>
                 <div class="page_lich-hoadon-note-text">
                     Mã vé sẽ được gửi qua <span>Email</span> đã đăng ký.
-                </div>
-
+                </div> -->
 
             </div>
             <label for='sb'>
-                <div class="page_lich-hoadon-button">
+                <div class="page_lich-hoadon-button" onclick="lin()">
                     Đặt Vé
                     <input type="submit" id='sb' name="" style="display: none;">
                 </div>
@@ -384,6 +383,14 @@
         </div>
     </div>
 </body>
+<script type="text/javascript">
+    
+
+    function lin(){
+        window.open('https://www.vietcombank.com.vn/IBanking2020/55c3c0a782b739e063efa9d5985e2ab4/Account/Login');
+    }
+
+</script>
 <script>
     var price = 0;
     var seat = '';

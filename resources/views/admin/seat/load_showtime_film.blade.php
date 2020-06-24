@@ -1,4 +1,4 @@
-<div style="width: 100%;font-size: 13px; margin-left: 2%;margin-top: 10px;">
+<div style="width: 100%;--font-size: 13px; margin-left: 2%;margin-top: 10px;">
 	<div class="" style="padding: 10px;">
 		<div style="width: 100%;display: flex; flex-direction: column;">
 			<div style="width: 100%; display: flex;--justify-content: space-around;justify-content:flex-start;">

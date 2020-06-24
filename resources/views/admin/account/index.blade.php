@@ -1,7 +1,7 @@
 @extends('admin.layouts.index')
 @section('content')
 <style type="text/css">
-	.main-content { width: 100%; display: flex;font-size: 16px  }
+	.main-content { width: 100%; display: flex;--font-size: 16px  }
 	.left { width: 100%; box-shadow: 10px 10px 10px #ddd; padding:10px; }	
 
 	table { width: 100% }
@@ -16,8 +16,8 @@
 	tr:hover { color: green }
 </style>
 <br>
-	<div style="margin-left: 3%;width: 100%;display: flex;">
-		<div style="width: 50%"><h3>Danh sách tài khoản</h3></div>
+	<div style="margin-left: 3%;font-size: 20px;display: flex;">
+		<div style="width: 50%"><b>Danh sách tài khoản</b></div>
     	<input class="form-control mr-sm-2" id='search' style="width: 50%;" type="text" placeholder="Tìm tài khoản..." aria-label="Search">
 	</div>
 	@if($message = Session::get('success'))

@@ -6,15 +6,25 @@
     href="https://s3img.vcdn.vn/123phim/2018/09/459970ce80ca2c762c8c8076b415c06e.png" />
   <title>Index</title>
   <link rel="stylesheet" href="{{asset('src/user/style.css')}}">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" >
+  <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+  <script type="text/javascript">
+    var link = 'https://www.youtube.com/embed/'
+    var path = "{{asset('/')}}"
+  </script>
+  <style type="text/css">
+    #ib{ border:none; }
+  </style>
 </head>
 
 <body>
+  <meta name="csrf-token" content="{{ csrf_token() }}">
   <div class="pagehome">
     <header class="header">
       <nav class="header_nav">
         <a href="#"><img class="img_logo" src="https://tix.vn/app/assets/img/icons/web-logo.png" alt="logo"></a>
         <ul class="header_list header_list-menu ">
-          <li class="header_item"><a href="{{route('user.home')}}">Trang chủ</a></li>
+          <li class="header_item"><a href="#menu_lichchieu">Lịch chiếu</a></li>
           <li class="header_item"><a href="#menu_cumrap">Cụm rạp</a></li>
           <li class="header_item"><a href="#menu_ungdung">Ứng dụng</a></li>
         </ul>
@@ -97,10 +107,14 @@
 
     <div class="booking">
       <ul class="booking_list">
+        <input type="text" name="" value="" class="form-control" style="width: 100%;font-size: 13px" id='ib' placeholder="Tìm kiếm">
         <li>
-          <select class="booking_list_item-phim" name="" id="">
+          <!-- <select class="booking_list_item-phim" name="" id="">
             <option disabled selected value="">Phim</option>
-          </select>
+            @foreach ($films as $film)
+            <option>{{$film->name}}</option>
+            @endforeach
+          </select> -->
         </li>
         <li class="booking_list_ctn">
           <select class="booking_list_item" name="" id="">
@@ -115,11 +129,14 @@
         <li class="booking_list_ctn">
           <select class="booking_list_item" name="" id="">
             <option disabled selected value="">Suất chiếu</option>
+            @foreach ($showtimes as $show)
+            <option>{{$show->start}} ~ {{$show->end}}</option>
+            @endforeach
           </select>
         </li>
         <li class="booking_list_ctn">
           <div class="booking_list_item">
-            <button class="booking_list_item_btn">MUA VÉ NGAY</button>            
+            <button class="booking_list_item_btn" style="background-color: red">MUA VÉ NGAY</button>            
           </div>
         </li>
       </ul>
@@ -128,60 +145,62 @@
 
     <div class="phim">
       <ul class="phim_title">
-        <li class="phim_title_text phim_title_text-active">Đang Chiếu</li>
-        <li class="phim_title_text ">Sắp Chiếu</li>
+        <li class="phim_title_text showfilm phim_title_text-active" id='showing'>Đang Chiếu</li>
+        <li class="phim_title_text showfilm" id='commingsoon'>Sắp Chiếu</li>
       </ul>
 
       <!-- danh sach phim -->
-      <div class="phim_content">
-        <div id="home-dsphim" class="phim_content-container">
-          <div class="phim_content-row">
+      <div class="load-film">
+        <div class="phim_content">
+          <div id="home-dsphim" class="phim_content-container">
+            <div class="phim_content-row">
 
-            @foreach($films as $key => $film)
-            <div class="phim_content-item">
-              <div class="phim_content-img">
-                <img class="phim_content-poster" src="{{asset('img/poster')}}/{{$film->poster}}" alt="">
-                <div class="phim_content-dinhdang">C16</div>
-                @if (isset($film->star))
-                <div class="phim_content-danhgia">
-                  <span>{{$film->star}}</span>
-                  <div class="phim_content-danhgia-sao">
-                  	@for($i=0; $i< round($film->star/2); $i++)
-                    <img src="https://tix.vn/app/assets/img/icons/star1.png">
-                    @endfor
+              @foreach($films as $key => $film)
+              <div class="phim_content-item">
+                <div class="phim_content-img">
+                  <img class="phim_content-poster" src="{{asset('img/poster')}}/{{$film->poster}}" alt="">
+                  <div class="phim_content-dinhdang">C16</div>
+                  @if (isset($film->star))
+                  <div class="phim_content-danhgia">
+                    <span>{{$film->star}}</span>
+                    <div class="phim_content-danhgia-sao">
+                    	@for($i=0; $i< round($film->star/2); $i++)
+                      <img src="https://tix.vn/app/assets/img/icons/star1.png">
+                      @endfor
+                    </div>
+                  </div>
+                  @endif
+                  <img style="z-index: 1" onclick="openModal('{{$film->trailer}}')" src="https://tix.vn/app/assets/img/icons/play-video.png" class="phim_content-play-img"
+                  alt="play">
+                  <a href="{{route('user.detail',$film->id)}}">
+                    <div class="phim_content-play">
+                    </div>
+                  </a>
+                </div>
+                <div class="phim_content-lable">
+                  <span class="phim_content-name">
+                    {{$film->name}}
+                  </span>
+                  <span class="phim_content-time">
+                    {{$film->runtime}} phút
+                  </span>
+                  <div class="phim_content-booking">
+                    <div class="phim_content-booking-button">MUA VÉ</div>
                   </div>
                 </div>
-                @endif
-                <a href="{{route('user.detail',$film->id)}}">
-                  <div class="phim_content-play">
-                    <img src="https://tix.vn/app/assets/img/icons/play-video.png" class="phim_content-play-img"
-                      alt="play">
-                  </div>
-                </a>
               </div>
-              <div class="phim_content-lable">
-                <span class="phim_content-name">
-                  {{$film->name}}
-                </span>
-                <span class="phim_content-time">
-                  {{$film->runtime}} phút
-                </span>
-                <div class="phim_content-booking">
-                  <div class="phim_content-booking-button">MUA VÉ</div>
-                </div>
-              </div>
+  			@if ($key % 8 == 7)
+  				</div>
+  				<div class="phim_content-row">
+  			@endif
+              @endforeach
+
             </div>
-			@if ($key % 8 == 7)
-				</div>
-				<div class="phim_content-row">
-			@endif
-            @endforeach
-
           </div>
-        </div>
-        <a onclick="plusphim(-1)" class="phim_prev">&#10094;</a>
-        <a onclick="plusphim(1)" class="phim_next">&#10095;</a>
+          <a onclick="plusphim(-1)" class="phim_prev">&#10094;</a>
+          <a onclick="plusphim(1)" class="phim_next">&#10095;</a>
 
+        </div>
       </div>
     </div>
 
@@ -404,16 +423,14 @@
         </div>
     </div>
   </div>
-  <div class="modal">
-    <div class="modal_overlay"></div>
+  <div class="modal" style="display: none;">
+    <div class="modal_overlay" style="background-color: black; opacity: 0.8"></div>
     <div class="modal_body">
       <div class="modal_inner">
-        <div class="modal_inner-ytb">
-          <img class="modal_inner-ytb-exit" src="https://tix.vn/app/assets/img/icons/close.png" alt="exit">
+        <div class="modal_inner-ytb" style="display: flex; justify-content: center;margin-top: 5%">
+          <img style="position: absolute;right:200px;" onclick="close1()" class="modal_inner-ytb-exit" src="https://tix.vn/app/assets/img/icons/close.png" alt="exit">
           <div id="trailerytb" class="modal_inner-iframe-ytb">
-          <iframe class="iframe-ytb" src="https://www.youtube.com/embed/8cG1aVT-M-A?autoplay=0" 
-          frameborder="0"  
-          allowfullscreen></iframe>
+          <iframe class="iframe-ytb" frameborder="0"  allow="autoplay" allowfullscreen></iframe>
           </div>
 
         </div>
@@ -423,7 +440,62 @@
 </body>
 
 
+<script type="text/javascript">
+    $('.phim_title_text').on('click',function(){
+      //alert()
+      $('.phim_title_text').removeClass('phim_title_text-active');
+      $(this).addClass('phim_title_text-active')
+      const type = $(this).attr('id')
+        $.ajax({
+          headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          },
+          type: 'post',
+          url: path +'user/commingsoon',
+          data : {type:type},
+          success : function(data) {
+            //alert('ok')
+            $('.load-film').html(data)
+          },
+          error : function(error) {
+            alert('error')
+          }
+        })
+      })
 
+    $('#ib').on('change',function(){
+      const key = $('#ib').val()
+
+      $.ajax({
+          headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          },
+          type: 'post',
+          url: path +'user/find',
+          data : {key:key},
+          success : function(data) {
+            //alert('ok')
+            $('.load-film').html(data)
+          },
+          error : function(error) {
+            alert('error')
+          }
+        })
+    })
+    
+</script>
+<script type="text/javascript">
+
+  function openModal(id){
+    $(".iframe-ytb").attr('src',link + id + '?autoplay=1');
+    $('.modal').css('display','block')
+  }
+  function close1(){
+   $('.modal').css('display','none')
+   $(".iframe-ytb").removeAttr('src');
+  }
+  
+</script>
 
 <script>
   var slideIndex = 1;

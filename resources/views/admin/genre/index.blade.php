@@ -14,7 +14,14 @@
 	input:focus { outline: none }
 </style>
 <br>
-	<div style="margin-left: 10%"><h3>Quản lí thể loại</h3></div>
+	<div style="display: flex; width: 100%;margin-left: 3%">
+		<div style="width: 25%; font-size: 20px;"><b>Quản lý thể loại</b></div>
+		<div style="width: 55%">
+			<!-- <b> Tổng phim: </b>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			<b> Đang chiếu:</b>  -->
+		</div>
+	</div>
 	@if($message = Session::get('success'))
         <div class="alert alert-success" role="alert" id='showMessage'
             style="position: fixed;width: 50%;padding: 7px; right: 0px;top:10%;">

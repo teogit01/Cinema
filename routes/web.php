@@ -86,7 +86,7 @@ route::prefix('admin')->group(function(){
 		//add show
 		route::post('/add','Admin\ShowtimeController@postAdd')->name('admin.showtime.add');
 		// set time end and select room
-		route::post('/settime/','Admin\ShowtimeController@setTime')->name('admin.film.settime');
+		route::post('/settime','Admin\ShowtimeController@setTime')->name('admin.film.settime');
 		// showtime of day (thứ trong tuần)	
 		route::post('/ofday/','Admin\ShowtimeController@showtimeOfDay')->name('admin.film.ofday');	
 		// showtime of date (Ngày tháng đc chọn)
@@ -113,17 +113,25 @@ route::prefix('admin')->group(function(){
 		route::post('/find','Admin\AccountController@find')->name('admin.account.find');
 		
 	});
+	////////////////////// statistic //////////////////////
+	route::prefix('statistic')->group(function(){
+		route::get('/','Admin\StatisticController@index')->name('admin.statistic');
+		route::post('/find','Admin\StatisticController@find')->name('admin.statistic.find');
+		
+	});
+
 });
 
 ///////////////////// User /////////////////////
 route::prefix('user')->group(function(){
 	route::get('/','User\UserController@home')->name('user.home');
+	route::post('/commingsoon','User\UserController@commingsoon')->name('user.commingsoon');
 	route::get('/detail/{id}','User\UserController@detail')->name('user.detail');
 
 	//find show time of day
 	route::post('/showtime/find','User\UserController@findShowtime')->name('user.showtime.find');	
 	//post danh gia
-	route::post('/rate/','User\UserController@rate')->name('user.rate');	
+	route::post('/rate','User\UserController@rate')->name('user.rate');	
 
 	// thanh toan
 	route::get('/checkout/{id_user}/{id_film}/{id_showtime}','User\UserController@checkout')->name('user.checkout');
@@ -133,6 +141,8 @@ route::prefix('user')->group(function(){
 	///// frofile /////
 	route::get('/profile/{id}','User\UserController@profile')->name('user.profile');
 	route::post('/profile/edit','User\UserController@editProfile')->name('user.profile.edit');
+	///find
+	route::post('/find','User\UserController@find')->name('user.find');
 
 });
 

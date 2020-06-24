@@ -12,7 +12,8 @@ class TicketController extends Controller
 {
     public function index(){
     	$films = film::where('status',1)->get();
-    	$tickets = ticket::where('date',date('Y-m-d'))->get();
+    	//$tickets = ticket::where('date',date('Y-m-d'))->get();
+        $tickets = ticket::all();
     	return view('admin.ticket.index',[
     		'films'=>$films,
     		'tickets'=>$tickets,

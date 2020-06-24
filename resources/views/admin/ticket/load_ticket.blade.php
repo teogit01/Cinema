@@ -12,7 +12,7 @@
 	@foreach ($tickets as $index => $ticket)
 	<tr>
 		<td>{{ $index+1 }}</td>
-		<td></td>
+		<td>{{ $ticket->user->name }}</td>
 		<td>{{ $ticket->date }}</td>
 		<td>{{ $ticket->film->name }}</td>
 		<td>{{ $ticket->showtime->start }}~{{ $ticket->showtime->end }}</td>

@@ -94,7 +94,7 @@
             </tr>
             <tr>
               <th>Email:</th>
-              <td><input type="text" name='email' placeholder='{{$user->email}}' autocomplete="off" disabled class="open"></td>
+              <td><input type="text" name='email' placeholder='{{$user->email}}' autocomplete="off" disabled class=""></td>
             </tr>
             <tr>
               <th>Ngày sinh:</th>

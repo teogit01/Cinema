@@ -91,7 +91,6 @@
                         <div class="page_phim_container-content-right-sao">
                           @if (isset($film->star))
 
-                            <span>{{$film->star}}</span>
                             <div class="phim_content-danhgia-sao">
                             @for($i=0; $i< round($film->star/2); $i++)
                               <img src="https://tix.vn/app/assets/img/icons/star1.png">
@@ -410,6 +409,7 @@
                     <div onclick="linklogin()" class="modal_inner-check-button">Đăng Nhập</div>
                 </div>   -->                 
                 <form action="{{route('user.rate')}}" method="post" >
+                  @csrf
                     <div class="modal_inner-danhgia">
                         <div onclick="exitmodal()" class="modal_inner-exit">
                             <img src="https://tix.vn/app/assets/img/icons/xController.png" alt="exit">
@@ -440,10 +440,9 @@
                             <textarea class="modal_inner-danhgia-binhluan-input" name="comment" placeholder="Nói mọi người biết bạn nghĩ gì về phim này..."></textarea>
                         </div>
                         <div class="modal_inner-danhgia-button">
-                            <button>ĐĂNG</button>
+                            <button type="submit">ĐĂNG</button>
                         </div>
                     </div>                         
-                    {{csrf_field()}}
                 </form>
             </div>
         </div>

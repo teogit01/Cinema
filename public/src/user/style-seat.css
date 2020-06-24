@@ -28,7 +28,7 @@ html{
 
 body {
     margin: 0 auto;
-    font-size: 1.6rem;
+    --font-size: 1.6rem;
     position: relative;
 }
 

@@ -2,7 +2,7 @@
 @section('content')
 	  
   <style type="text/css">
-    .content { font-family: arial }
+    .content { font-family: arial;  }
     .badge{
         width: 90px;
     }
@@ -25,7 +25,7 @@
     .main-content { width: 100%; }
     .th { --box-shadow: 1px 2px 10px #aaa; }
     .tr:hover { transform: scale(1.01);transition: 0.1s; box-shadow: 1px 1px 10px #ddd; color: #618985 }
-    img { width: 100px; height: 150px; }
+    .img { width: 100px; height: 150px; }
     table { width: 100%; box-shadow: 10px 10px 10px #ddd; }
     tr { border-bottom: 1px solid #eee; line-height: 40px; }
     .a { cursor: pointer; }
@@ -37,8 +37,13 @@
         </div>
     @endif   
     <div class="content">
-        <div style="display: flex;">
-            <h5 style="width: 80%">Danh Sách Phim</h5>
+        <div style="display: flex; width: 100%">
+            <div style="width: 25%; font-size: 20px;"><b>Danh Sách Phim</b></div>
+            <div style="width: 55%">
+                <b> Tổng phim: </b>{{ $count }}
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <b> Đang chiếu:</b> {{$showing}}
+            </div>
             <a href="{{route('admin.film.getadd')}}" class="btn btn-info" style="width: 10%">Thêm</a>
         </div>
         <hr>
@@ -58,7 +63,7 @@
                     <tr style="text-align: left;" class="tr" ondblclick='detail({{$film->id}})'>
                         <td style="width: 3%;">{{$index + 1}}</td>
                         <td style="width: 17%;">
-                            <img src="{{asset('img/poster')}}/{{$film->poster}}">
+                            <img class="img" src="{{asset('img/poster')}}/{{$film->poster}}">
                         </td>
                         <td style="width: 10%;">{{$film->code}}</td>
                         <td style="width: 20%;">{{$film->name}}</td>

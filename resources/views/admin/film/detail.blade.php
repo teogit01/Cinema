@@ -2,12 +2,12 @@
 @section('content')
 	  
   <style type="text/css">
-    .content { font-family: arial }
+    .content { font-family: arial; font-size: 15px; }
     .badge{
         width: 90px;
     }
     .main-content { width: 100%; display: flex; }
-    .left { width: 60%; box-shadow: 10px 10px 10px #ddd; height: 580px; }
+    .left { width: 60%; box-shadow: 10px 10px 10px #ddd; height: 600px; }
     .right { width: 40%;box-shadow: 10px 10px 10px #ddd;text-align: center; height: 500px;}
 
     .th { --box-shadow: 1px 2px 10px #aaa; }
@@ -100,6 +100,10 @@
                   </select>
                 </td>
               </tr>
+              <tr>
+                <th>Trailer</th>
+                <td><input type="text" name="trailer" class="open" value="" placeholder="{{$film->trailer}}" disabled autocomplete="off" ></td>
+              </tr>
           		<tr>
           			<th>Trạng thái</th>
           			<td><input type="number" name="status" class="open" value="" placeholder="{{$film->status}}" disabled autocomplete="off" max="1" min="0"></td>
@@ -107,7 +111,7 @@
           		<tr>
           			<th>Tóm tắt</th>
           			<td>
-          				<input id="trailer" type="text" name="trailer" class="open" value="" disabled placeholder="{{ $film->trailer }}" autocomplete="off">
+          				<input id="description" type="text" name="description" class="open" value="" disabled placeholder="{{ $film->description }}" autocomplete="off">
           			</td>
           		</tr>
           		<tr>

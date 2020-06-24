@@ -24,8 +24,11 @@ class FilmController extends Controller
     	return view('admin.film.index');
     }
     public function list(){
-        $films = film::paginate(4);
-    	return view('admin.film.list',['films'=>$films]);
+        $count = film::all()->count();
+        $showing = film::where('status',1)->count();
+        $commingsoon = film::where('status',0)->count();
+        $films = film::orderBy('id','DESC')->paginate(4);
+    	return view('admin.film.list',['films'=>$films,'count'=>$count,'showing'=>$showing,'commingsoon'=>$commingsoon]);
     }
     public function getAdd(){
         $genres = genre::all();
@@ -38,10 +41,10 @@ class FilmController extends Controller
     public function postAdd(Request $request){
         
         // Add film 
-        if ($request->has('image')){
-            $path = public_path('img/film');
-            $name = Str::random(5).'_'.$request->image->getClientOriginalName();            
-            $request->image->move($path,$name);
+        if ($request->has('poster')){
+            $path = public_path('img/poster');
+            $name = Str::random(5).'_'.$request->poster->getClientOriginalName();            
+            $request->poster->move($path,$name);
         }             
         if ($request->has('banner')){
             $path = public_path('img/banner');
@@ -55,11 +58,13 @@ class FilmController extends Controller
         $film->director = $request->director;
         $film->cast = $request->cast;
         $film->trailer = $request->trailer;
+        $film->description = $request->description;
         $film->openday = $request->openday;
         $film->price = $request->price;
         $film->poster = isset($name) ? $name : ''; 
         $film->banner = isset($banner) ? $banner : ''; 
         $film->status = 0;
+        $film->star = 0;
         $film->save();
         
         //return $film->id;
@@ -148,6 +153,7 @@ class FilmController extends Controller
         $film->openday = isset($request->openday) ? $request->openday : $film->openday;
         $film->trailer = isset($request->trailer) ? $request->trailer : $film->trailer;
         $film->price = isset($request->price) ? $request->price : $film->price;
+        $film->description = isset($request->description) ? $request->description : $film->description;
         $film->status = isset($request->status) ? $request->status : $film->status;
         $film->save();
 

@@ -1,7 +1,7 @@
 @extends('admin.layouts.index')
 @section('content')
 <style type="text/css">
-	.main-content { width: 100%; display: flex; font-size: 16px }
+	.main-content { width: 100%; display: flex; --font-size: 16px }
 	.left { width: 60%; box-shadow: 10px 10px 10px #ddd; padding:10px; max-height: 500px;overflow: scroll; }	
 	.right { width: 40%;margin-left:40px; box-shadow: 10px 10px 10px #ddd;padding:10px; --max-height: 600px;height:280px;}
 	table { width: 100% }
@@ -14,7 +14,7 @@
 	input:focus { outline: none }
 </style>
 <br>
-	<div style="margin-left: 10%"><h3>Quản lí ghế ngồi</h3></div>
+	<div style="margin-left: 3%;font-size: 20px">Danh sách ghế</div>
 	@if($message = Session::get('success'))
         <div class="alert alert-success" role="alert" id='showMessage'
             style="position: fixed;width: 50%;padding: 7px; right: 0px;top:10%;">
@@ -58,7 +58,7 @@
 				</table>
 			</div>
 			<div class="right">
-				<form action="#" method="" class="load-right">
+				<form action="#" method="" class="load-right" style="font-size: 15px">
 					@csrf
 					<label><h5>Chọn Hàng Ghế</h5></label>
 					<select class="form-control rows" name="row">
